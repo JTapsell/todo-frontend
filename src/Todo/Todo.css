@@ -1,0 +1,11 @@
+.todo-list {
+    list-style: none;
+}
+.todo-item {
+    display: flex;
+}
+
+.is-done {
+    text-decoration: line-through;
+    color: lightgray;
+}
