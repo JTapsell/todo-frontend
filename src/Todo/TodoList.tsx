@@ -24,7 +24,7 @@ export const TodoList: FunctionComponent = () => {
       const response = await sendRequest({
         url: 'http://localhost:8080/api/todos/',
         method: 'POST',
-        headers: { Authorization: `Bearer ${auth.token}` },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${auth.token}` },
         body: JSON.stringify({
           uid: auth.userId,
           description: inputVal,
