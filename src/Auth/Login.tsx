@@ -23,8 +23,7 @@ export const Login: FunctionComponent = () => {
       });
 
       const responseData = await response;
-      console.log(responseData);
-      auth.login(responseData.user.id);
+      auth.login(responseData.userId, responseData.token);
     } catch (err) {
       console.log(err);
     }

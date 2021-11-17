@@ -9,25 +9,26 @@ export const SignUp: FunctionComponent = () => {
   const { register, handleSubmit, errors } = useForm();
   const auth = useContext(AuthContext);
 
-  const signupOnSubmit = (event): void => {
+  const signupOnSubmit = async event => {
     const { firstName, lastName, email, password, confirmPassword } = event;
-    fetch('http://localhost:8080/api/users/sign-up', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-      }),
-    })
-      .then(res =>
-        res.json().then(data => {
-          auth.login(data.user.id);
-        })
-      )
-      .catch(err => console.log(err));
+    try {
+      const res = await fetch('http://localhost:8080/api/users/sign-up', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+        }),
+      });
+      const user = await res.json();
+      const { userId, token } = user;
+      auth.login(userId, token);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <form onSubmit={handleSubmit(signupOnSubmit)}>
